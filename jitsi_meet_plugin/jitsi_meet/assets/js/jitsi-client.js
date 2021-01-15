@@ -7,7 +7,7 @@ function meeting(parent, roomName, password, subject, userName) {
             'microphone', 'camera', 'closedcaptions', 'desktop', 'fullscreen',
             'fodeviceselection', 'hangup', 'profile', 'info', 'chat', 'recording',
             'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
-            'videoquality', 'filmstrip', 'feedback', 'stats', 'shortcuts',
+            'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
             'tileview', 'videobackgroundblur', 'download',  'mute-everyone', 'e2ee'
         ],
         SHOW_JITSI_WATERMARK: false,
@@ -18,7 +18,6 @@ function meeting(parent, roomName, password, subject, userName) {
         // PROVIDER_NAME: 'Cloud Classroom',
         DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow',
         DEFAULT_LOCAL_DISPLAY_NAME: 'me',
-        DISPLAY_WELCOME_FOOTER: false, //Shubh Added
         INVITATION_POWERED_BY: false,
         CLOSE_PAGE_GUEST_HINT: '<div class = "hint-msg"></div>',
         SHOW_PROMOTIONAL_CLOSE_PAGE: false,

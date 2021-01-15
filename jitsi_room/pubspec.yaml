@@ -32,9 +32,7 @@ dependencies:
   share: ^0.6.5+4
   uuid: ^2.2.2
   jitsi_meet:
-    git:
-      url: https://github.com/ShubheshDixit/jitsi_room_flutter.git
-      path: ./jitsi_meet_plugin/jitsi_meet
+    path: ../jitsi_meet_plugin/jitsi_meet
 
 dev_dependencies:
   flutter_test:
