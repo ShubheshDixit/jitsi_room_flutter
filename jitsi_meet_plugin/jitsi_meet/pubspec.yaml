@@ -1,7 +1,8 @@
 name: jitsi_meet
 description: Jitsi Meet Plugin
 version: 0.2.5
-homepage: https://github.com/gunschu/jitsi_meet
+
+publish_to: none
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
