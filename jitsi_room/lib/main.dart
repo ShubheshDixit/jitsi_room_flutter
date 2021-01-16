@@ -182,7 +182,7 @@ class _MeetingBoxState extends State<MeetingBox> {
     final ShortDynamicLink shortenedLink =
         await DynamicLinkParameters.shortenUrl(
       Uri.parse(
-          'https://adherer.page.link/?link=https://adherer-io.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room'),
+          'https://your.page.link/?link=https://your.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.appid'),
       DynamicLinkParametersOptions(
           shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
     );
@@ -270,7 +270,7 @@ class _MeetingBoxState extends State<MeetingBox> {
                     onPressed: () {
                       if (roomId != null) {
                         Share.share(
-                            'Hey Join My Room @ https://adherer.page.link/?link=https://adherer-io.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room');
+                            'Hey Join My Room @ https://your.page.link/?link=https://your.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.appid');
                       }
                     },
                     tooltip: 'Share room info',
