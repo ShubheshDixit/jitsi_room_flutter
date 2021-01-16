@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AwesomeTextField extends StatefulWidget {
-  final bool isPassword;
+  final bool isPassword, isReadOnly;
   final Widget prefixIcon;
   final TextInputType keyboardType;
   final TextStyle labelNhintStyle, inputStyle;
@@ -52,7 +52,8 @@ class AwesomeTextField extends StatefulWidget {
       this.controller,
       this.formatter,
       this.obscureText = false,
-      this.helperText})
+      this.helperText,
+      this.isReadOnly = false})
       : super(key: key);
 
   @override
@@ -69,7 +70,7 @@ class _AwesomeTextFieldState extends State<AwesomeTextField>
   void initState() {
     super.initState();
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 1))
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
           ..forward();
     if (widget.isPassword) isHidden = true;
   }
@@ -91,6 +92,7 @@ class _AwesomeTextFieldState extends State<AwesomeTextField>
         ),
         child: TextField(
           controller: widget.controller,
+          readOnly: widget.isReadOnly,
           keyboardType: widget.keyboardType,
           maxLines: widget.isPassword ? 1 : widget.maxLines,
           minLines: widget.minLines,

@@ -9,13 +9,11 @@ class Meeting extends StatefulWidget {
   final String roomText, username, email;
   final Widget avatarImage;
   final String subjectText;
-  final bool isVideo;
 
   const Meeting({
     Key key,
     this.roomText,
     this.subjectText,
-    this.isVideo,
     this.username,
     this.email,
     this.avatarImage,

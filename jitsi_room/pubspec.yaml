@@ -23,16 +23,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
-  google_fonts: ^1.1.1
-  font_awesome_flutter: ^8.11.0
-  theme_mode_handler: ^2.0.0
-  shared_preferences: ^0.5.12+4
-  share: ^0.6.5+4
-  uuid: ^2.2.2
   jitsi_meet:
     path: ../jitsi_meet_plugin/jitsi_meet
+  cloud_firestore: ^0.16.0
+  cupertino_icons: ^1.0.2
+  firebase_analytics: ^7.0.1
+  firebase_auth: ^0.20.0+1
+  firebase_core: ^0.7.0
+  firebase_dynamic_links: ^0.7.0+1
+  font_awesome_flutter: ^8.11.0
+  google_fonts: ^1.1.1
+  share: ^0.6.5+4
+  shared_preferences: ^0.5.12+4
+  theme_mode_handler: ^2.0.0
+  uuid: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +49,6 @@ flutter:
 
   assets:
     - images/avatars/
-
   # fonts:
   #   - family: Schyler
   #     fonts:

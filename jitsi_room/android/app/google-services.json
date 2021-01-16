@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "754135788818",
+    "project_id": "adherer-io",
+    "storage_bucket": "adherer-io.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:754135788818:android:7f6e5b4071168b2c2517cb",
+        "android_client_info": {
+          "package_name": "yt.smazer.gabble.jitsi_room"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "754135788818-o7f2bbdin82ohar9qmms6k8hglbselu3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "yt.smazer.gabble.jitsi_room",
+            "certificate_hash": "f328e489630ca3ececd9773d6585d443cf710120"
+          }
+        },
+        {
+          "client_id": "754135788818-14e7hagpd2b8p3ug4f6af0mn3l79f8j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyCK9JUKxgZOrhSq1ALF-PsjMDaYAXUuY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "754135788818-14e7hagpd2b8p3ug4f6af0mn3l79f8j8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

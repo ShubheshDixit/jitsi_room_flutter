@@ -40,6 +40,25 @@
       });
     }
   </script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyBygQMhewpbWx8EytimnJYbbf_q7KPFWXI",
+      authDomain: "adherer-io.firebaseapp.com",
+      projectId: "adherer-io",
+      storageBucket: "adherer-io.appspot.com",
+      messagingSenderId: "754135788818",
+      appId: "1:754135788818:web:008eee1537400d7c2517cb",
+      measurementId: "G-YH9R77XYTF"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <script src="https://meet.jit.si/external_api.js" type="application/javascript"></script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
