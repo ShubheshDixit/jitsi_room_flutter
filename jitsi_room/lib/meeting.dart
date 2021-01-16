@@ -39,11 +39,11 @@ class _MeetingState extends State<Meeting> {
   @override
   void initState() {
     super.initState();
-    // JitsiMeet.addListener(JitsiMeetingListener(
-    //     onConferenceWillJoin: _onConferenceWillJoin,
-    //     onConferenceJoined: _onConferenceJoined,
-    //     onConferenceTerminated: _onConferenceTerminated,
-    //     onError: _onError));
+    JitsiMeet.addListener(JitsiMeetingListener(
+        onConferenceWillJoin: _onConferenceWillJoin,
+        onConferenceJoined: _onConferenceJoined,
+        onConferenceTerminated: _onConferenceTerminated,
+        onError: _onError));
   }
 
   @override
@@ -57,6 +57,23 @@ class _MeetingState extends State<Meeting> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AwesomeButton(
+              height: 40,
+              child: Text(
+                'Leave Meeting',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          )
+        ],
+      ),
       body: Container(
         child: !connected
             ? Center(
@@ -325,25 +342,25 @@ class _MeetingState extends State<Meeting> {
   //   }, "Currencies characters aren't allowed in room names."),
   // };
 
-  // void _onConferenceWillJoin({message}) {
-  //   debugPrint("_onConferenceWillJoin broadcasted with message: $message");
-  // }
+  void _onConferenceWillJoin({message}) {
+    debugPrint("_onConferenceWillJoin broadcasted with message: $message");
+  }
 
-  // void _onConferenceJoined({message}) {
-  //   setState(() {
-  //     connected = true;
-  //   });
-  //   debugPrint("_onConferenceJoined broadcasted with message: $message");
-  // }
+  void _onConferenceJoined({message}) {
+    setState(() {
+      connected = true;
+    });
+    debugPrint("_onConferenceJoined broadcasted with message: $message");
+  }
 
-  // void _onConferenceTerminated({message}) {
-  //   Navigator.pop(context);
-  //   // debugPrint("_onConferenceTerminated broadcasted with message: $message");
-  // }
+  void _onConferenceTerminated({message}) {
+    // Navigator.pushReplacementNamed(context, '/');
+    debugPrint("_onConferenceTerminated broadcasted with message: $message");
+  }
 
-  // _onError(error) {
-  //   debugPrint("_onError broadcasted: $error");
-  // }
+  _onError(error) {
+    debugPrint("_onError broadcasted: $error");
+  }
 }
 
 class CenterInfo extends StatelessWidget {

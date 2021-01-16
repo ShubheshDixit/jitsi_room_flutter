@@ -1,9 +1,13 @@
+import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jitsi_room/meeting.dart';
 import 'package:jitsi_room/services/dynamic_link_service.dart';
+import 'package:jitsi_room/services/route_generator.dart';
 import 'package:jitsi_room/widgets/awesome_buttons.dart';
 import 'package:jitsi_room/widgets/awesome_containers.dart';
 import 'package:jitsi_room/widgets/awesome_textfield.dart';
@@ -24,53 +28,25 @@ class MyApp extends StatelessWidget {
     return ThemeModeHandler(
         builder: (ThemeMode themeMode) {
           return MaterialApp(
-            title: 'Jitsi - Meeting',
+            title: 'Adherer - Meeting',
             themeMode: themeMode,
             darkTheme: ThemeData(
-              textTheme: TextTheme(
-                bodyText1: GoogleFonts.fredokaOne(),
-                bodyText2: GoogleFonts.fredokaOne(),
-                headline1: GoogleFonts.fredokaOne(),
-                headline2: GoogleFonts.fredokaOne(),
-                headline3: GoogleFonts.fredokaOne(),
-                headline4: GoogleFonts.fredokaOne(),
-                headline5: GoogleFonts.fredokaOne(),
-                headline6: GoogleFonts.fredokaOne(),
-                subtitle1: GoogleFonts.fredokaOne(),
-                subtitle2: GoogleFonts.fredokaOne(),
-                caption: GoogleFonts.fredokaOne(),
-                overline: GoogleFonts.fredokaOne(),
-                button: GoogleFonts.fredokaOne(),
-                // title: GoogleFonts.fredokaOne(),
-              ),
+              fontFamily: GoogleFonts.fredokaOne().fontFamily,
               brightness: Brightness.dark,
               primarySwatch: Colors.teal,
               primaryColor: Colors.teal,
               accentColor: Colors.orange,
             ),
             theme: ThemeData(
-              textTheme: TextTheme(
-                bodyText1: GoogleFonts.fredokaOne(),
-                bodyText2: GoogleFonts.fredokaOne(),
-                headline1: GoogleFonts.fredokaOne(),
-                headline2: GoogleFonts.fredokaOne(),
-                headline3: GoogleFonts.fredokaOne(),
-                headline4: GoogleFonts.fredokaOne(),
-                headline5: GoogleFonts.fredokaOne(),
-                headline6: GoogleFonts.fredokaOne(),
-                subtitle1: GoogleFonts.fredokaOne(),
-                subtitle2: GoogleFonts.fredokaOne(),
-                caption: GoogleFonts.fredokaOne(),
-                overline: GoogleFonts.fredokaOne(),
-                button: GoogleFonts.fredokaOne(),
-                // title: GoogleFonts.fredokaOne(),
-              ),
+              fontFamily: GoogleFonts.fredokaOne().fontFamily,
               brightness: Brightness.light,
               primarySwatch: Colors.blue,
               primaryColor: Colors.blue,
               accentColor: Colors.orange,
             ),
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            home: MyHomePage(),
+            initialRoute: '/',
+            onGenerateRoute: RouteGenerator.generateRoute,
           );
         },
         manager: ThemeModeManager());
@@ -94,10 +70,6 @@ class ThemeModeManager implements IThemeModeManager {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -115,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> init() async {
     await Firebase.initializeApp();
-    DynamicLinkService().handleDynamicLinks(context);
+    if (!kIsWeb) DynamicLinkService().handleDynamicLinks(context);
   }
 
   @override
@@ -182,7 +154,7 @@ class _MeetingBoxState extends State<MeetingBox> {
     final ShortDynamicLink shortenedLink =
         await DynamicLinkParameters.shortenUrl(
       Uri.parse(
-          'https://adherer.page.link/?link=https://adherer-io.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room'),
+          'https://adherer.page.link/?link=https://adherer-io.web.app/%23/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room'),
       DynamicLinkParametersOptions(
           shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
     );
@@ -224,7 +196,33 @@ class _MeetingBoxState extends State<MeetingBox> {
             ),
             body: _buildBody(),
           )
-        : _buildBody();
+        : MediaQuery.of(context).size.width > 900
+            ? Center(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        width: 400,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.network(
+                              'assets/images/video_${ThemeModeHandler.of(context).themeMode == ThemeMode.dark ? 'r' : 'b'}.svg',
+                              height: 400,
+                            ),
+                          ],
+                        )),
+                    SizedBox(
+                      width: 80,
+                    ),
+                    _buildBody()
+                  ],
+                ),
+              )
+            : _buildBody();
   }
 
   Widget _buildBody() {
@@ -257,20 +255,54 @@ class _MeetingBoxState extends State<MeetingBox> {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  !kIsWeb
+                      ? IconButton(
+                          icon: Icon(Icons.link),
+                          onPressed: () async {
+                            if (roomId != null) {
+                              // var url = await createDynamicLink(roomId);
+                              var url =
+                                  'https://adherer.page.link/?link=https://adherer-io.web.app/%23/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room';
+                              Clipboard.setData(
+                                  new ClipboardData(text: "$url"));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(
+                                  'Link Copied to Clipboard',
+                                  style: GoogleFonts.fredokaOne(),
+                                ),
+                                width: 300,
+                                behavior: SnackBarBehavior.floating,
+                              ));
+                            }
+                          })
+                      : SizedBox.shrink(),
                   IconButton(
-                      icon: Icon(Icons.link),
-                      onPressed: () async {
-                        if (roomId != null) {
+                    icon: Icon(Icons.share),
+                    onPressed: () async {
+                      if (roomId != null) {
+                        if (kIsWeb) {
+                          var url =
+                              'https://adherer.page.link/?link=https://adherer-io.web.app/%23/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room';
+                          Clipboard.setData(new ClipboardData(text: "$url"));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              'Link Copied to Clipboard',
+                              style: GoogleFonts.fredokaOne(),
+                            ),
+                            width: 300,
+                            behavior: SnackBarBehavior.floating,
+                          ));
+                          // var shareData = {
+                          //   "title": 'Adherer Room',
+                          //   "text": 'Hey Join My Room',
+                          //   "url": '$url',
+                          // };
+                          // await html.window.navigator.share(shareData);
+                        } else {
                           var url = await createDynamicLink(roomId);
                           Share.share('Hey Join My Room @ $url');
                         }
-                      }),
-                  IconButton(
-                    icon: Icon(Icons.share),
-                    onPressed: () {
-                      if (roomId != null) {
-                        Share.share(
-                            'Hey Join My Room @ https://adherer.page.link/?link=https://adherer-io.web.app/room?roomId=$roomId&apn=yt.smazer.gabble.jitsi_room');
                       }
                     },
                     tooltip: 'Share room info',
@@ -311,17 +343,20 @@ class _MeetingBoxState extends State<MeetingBox> {
                     ? SizedBox(
                         height: 10,
                       )
-                    : AwesomeButton(
-                        onPressed: () {
-                          String id = _generateRandomRoomId();
-                          setState(() {
-                            roomId = id;
-                          });
-                          _roomIdController.text = roomId;
-                        },
-                        child: Text(
-                          'Generate random Room Id',
-                          style: TextStyle(fontSize: 18),
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AwesomeButton(
+                          onPressed: () {
+                            String id = _generateRandomRoomId();
+                            setState(() {
+                              roomId = id;
+                            });
+                            _roomIdController.text = roomId;
+                          },
+                          child: Text(
+                            'Generate random Room Id',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
               ],

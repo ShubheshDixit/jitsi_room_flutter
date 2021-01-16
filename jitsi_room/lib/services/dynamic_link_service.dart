@@ -1,7 +1,6 @@
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:jitsi_room/main.dart';
-import 'package:jitsi_room/meeting.dart';
 
 class DynamicLinkService {
   Future handleDynamicLinks(context) async {
@@ -19,10 +18,12 @@ class DynamicLinkService {
   void _handleDeepLink(PendingDynamicLinkData data, BuildContext context) {
     final Uri deepLink = data?.link;
     if (deepLink != null) {
-      print('_handleDeepLink | deepLink $deepLink');
-      var isRoom = deepLink.pathSegments.contains('room');
+      final url = Uri.parse(deepLink.toString().replaceAll('#', ''));
+      print('_handleDeepLink | deepLink $url');
+      var isRoom = url.pathSegments.contains('room');
+      print(url.queryParametersAll);
       if (isRoom) {
-        var roomId = deepLink.queryParameters['roomId'];
+        var roomId = url.queryParameters['roomId'];
         if (roomId != null) {
           print(roomId);
           Navigator.of(context).push(MaterialPageRoute(

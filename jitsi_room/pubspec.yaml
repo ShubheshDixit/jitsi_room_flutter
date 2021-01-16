@@ -27,7 +27,6 @@ dependencies:
     path: ../jitsi_meet_plugin/jitsi_meet
   cloud_firestore: ^0.16.0
   cupertino_icons: ^1.0.2
-  firebase_analytics: ^7.0.1
   firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
   firebase_dynamic_links: ^0.7.0+1
@@ -49,6 +48,7 @@ flutter:
 
   assets:
     - images/avatars/
+    - images/
   # fonts:
   #   - family: Schyler
   #     fonts:
