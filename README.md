@@ -11,5 +11,5 @@
 ### Check out the web app here: [adherer-io](https://adherer-io.web.app/#/)
 
 
-### Download the android app: [here](https://github.com/ShubheshDixit/jitsi_room_flutter/blob/master/dist_app/APKs/app-arm64-v8a-release.apk)
+### Download the android app: [here](https://play.google.com/store/apps/details?id=yt.smazer.gabble.adherer)
 
